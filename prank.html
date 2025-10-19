@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prank Web - Penghapus Data</title>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #000000, #8B0000, #000000);
+            background-size: 400% 400%;
+            animation: backgroundShift 2s ease-in-out infinite;
+            color: #FF0000;
+            font-family: 'Creepster', cursive;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        @keyframes backgroundShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container {
+            text-align: center;
+            z-index: 1;
+        }
+        h1, h2, p {
+            font-family: 'Orbitron', monospace;
+            text-shadow: 0 0 10px #FF0000, 0 0 20px #FF0000, 0 0 30px #FF0000;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .loading {
+            width: 100%;
+            height: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .loading-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #FF0000, #8B0000);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+        .countdown {
+            font-size: 5em;
+            color: #FFFF00;
+            text-shadow: 0 0 20px #FFFF00;
+        }
+        .prank-message {
+            display: none;
+            font-size: 2em;
+            color: #00FF00;
+            text-shadow: 0 0 20px #00FF00;
+        }
+        .scary-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://via.placeholder.com/1920x1080/000000/FF0000?text=SCARY') no-repeat center center;
+            background-size: cover;
+            opacity: 0.3;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Musik Serem: Menggunakan URL musik horror gratis dari freesound.org (pastikan legal dan aman) -->
+    <!-- Ganti src dengan file musik Anda sendiri jika perlu, atau gunakan URL bebas hak cipta -->
+    <audio id="scaryMusic" autoplay loop preload="auto" volume="0.3">
+        <source src="https://www.freesound.org/data/previews/316/316847_5123451-lq.mp3" type="audio/mpeg">
+        <!-- Fallback: Jika browser tidak mendukung, tidak ada musik -->
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <div class="scary-effect"></div>
+    <div class="container">
+        <h1 id="title">MENGHAPUS SEMUA DATA...</h1>
+        <p id="message">Jangan matikan perangkat! Proses penghapusan sedang berlangsung.</p>
+        <div class="loading">
+            <div class="loading-bar" id="loadingBar"></div>
+        </div>
+        <div class="countdown" id="countdown">10</div>
+        <h2 id="resetMessage" style="display: none;">RESETTING DEVICE...</h2>
+        <h1 id="prankMessage" class="prank-message">SELAMAT KAMU KENA PRANK! 😈</h1>
+    </div>
+
+    <script>
+        let countdown = 10;
+        let loading = 0;
+        const countdownEl = document.getElementById('countdown');
+        const loadingBar = document.getElementById('loadingBar');
+        const title = document.getElementById('title');
+        const message = document.getElementById('message');
+        const resetMessage = document.getElementById('resetMessage');
+        const prankMessage = document.getElementById('prankMessage');
+        const audio = document.getElementById('scaryMusic');
+
+        // Pastikan musik dimulai (beberapa browser memblokir autoplay)
+        audio.volume = 0.3; // Volume rendah untuk efek serem tanpa terlalu keras
+
+        const interval = setInterval(() => {
+            countdown--;
+            countdownEl.textContent = countdown;
+            loading += 10;
+            loadingBar.style.width = loading + '%';
+
+            if (countdown === 5) {
+                title.textContent = 'DATA BERHASIL DIHAPUS!';
+                message.textContent = 'Memulai reset perangkat...';
+            }
+            if (countdown === 0) {
+                clearInterval(interval);
+                countdownEl.style.display = 'none';
+                resetMessage.style.display = 'block';
+                setTimeout(() => {
+                    resetMessage.style.display = 'none';
+                    prankMessage.style.display = 'block';
+                    // Hentikan musik setelah prank selesai
+                    audio.pause();
+                }, 2000);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
